@@ -1,10 +1,14 @@
-#ifndef BUILTIN_COMMANDS_H
-#define BUILTIN_COMMANDS_H
+#ifndef HANDLE_COMMAND_H
+#define HANDLE_COMMAND_H
 
-#include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
 
+void handle_input(char **tokens); 
+
+// Builtin Commands 
 void builtin_exit(char **args);
 
 void builtin_cd(char **args); 

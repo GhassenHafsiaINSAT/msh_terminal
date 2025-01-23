@@ -1,5 +1,5 @@
-#include "parser.h"
-#include "builtin_commands.h"
+#include "shell_parser.h"
+#include "handle_commands.h"
 
 char *trim_spaces(char *buffer){
 	
@@ -31,6 +31,8 @@ char *trim_spaces(char *buffer){
 	buffer[j] = '\0';
 	return buffer; 
 }
+
+
 char **split_command(char *buffer){
 	char *tokens[TOKEN_MAX]; 
 	char *token = strtok(buffer, ' '); 
@@ -43,15 +45,4 @@ char **split_command(char *buffer){
 		token = strtok(NULL, ' '); 
 	}
 	return tokens; 
-}
-
-void parse_input(char **tokens){
-
-	int i; 
-	for (i=0; i<NUM_BUILTIN; i++){
-		if (strcmp(tokens[0], builtins[i].name) == 0) 
-			builtins->func(tokens); 
-			return; 
-	}
-	printf("Command Not Found"); 
 }
