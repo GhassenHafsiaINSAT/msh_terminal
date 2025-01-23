@@ -1,4 +1,4 @@
-#include "builtin_commands.h"
+#include "handle_commands.h"
 
 void builtin_exit(char **args){
 	
@@ -52,7 +52,26 @@ void builtin_echo(char **args){
 		i++; 
 	}   
 	while (args[i] != NULL){
-		printf("%s", args[i]); 
+		
+		if (strcmp(args[i], "$?") == 0){
+			printf("%d", exit_status); 
+		}
+
+		else if (strcmp(args[i], "$$") == 0){
+			pid_t caller_id = getpid(); 
+			printf("%d", caller_id); 
+		}
+
+		else if (strcmp(args[i], "$SHELL") == 0){
+			char *path = getenv("SHELL"); 
+			printf("%s", path); 
+			// to do : develop our 
+		}
+
+		else {
+			printf("%s", args[i]);
+		}
+
 		if (args[i + 1] != NULL) printf(" ");
 		i++;  
 	}

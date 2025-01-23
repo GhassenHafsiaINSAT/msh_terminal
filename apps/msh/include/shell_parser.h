@@ -6,6 +6,6 @@
 
 #define TOKEN_MAX 3
 char *trim_spaces(char *buffer); 
-void parse_input(char **buffer);
+char **split_command(char *buffer); 
 
 #endif

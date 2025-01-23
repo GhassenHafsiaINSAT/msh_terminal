@@ -6,6 +6,8 @@
 #include <unistd.h>
 #include <sys/types.h>
 
+extern exit_status; 
+
 void handle_input(char **tokens); 
 
 // Builtin Commands 
