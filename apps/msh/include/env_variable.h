@@ -6,4 +6,14 @@
 
 bool handle_env_variable_PS1(char *buffer); 
 
+
+typedef struct environment_variables{
+    char *name; 
+    char *value; 
+    struct node* next; 
+} env_var; 
+
+
+void set_env_var(char* name, char* value); 
+
 #endif
