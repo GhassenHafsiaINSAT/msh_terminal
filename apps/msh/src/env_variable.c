@@ -27,11 +27,12 @@ bool handle_env_variable_PS1(char *buffer){
 	return false; 
 } 
 
-void set_env_var(env_var** head_ref, char* name, char* value){
+void set_env_var(env_var** head_ref, char* name, char* value, bool exported){
 	// creating a new node
 	env_var* new_var = malloc(sizeof(env_var)); 
 	new_var->name = name; 
-	new_var->value = value; 
+	new_var->value = value;
+	new_var->exported = exported;  
 	new_var->next = NULL;
 
 	// if the list is already empty

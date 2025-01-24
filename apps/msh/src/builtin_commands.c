@@ -88,9 +88,31 @@ void builtin_pwd(char **args){
 	}
 	printf("%s\n", path); 
 }
+
+void builtin_export(char **args){
+	
+	char* equal = equal_sign_check(args[1]);
+	if (equal == NULL) {
+		fprintf (stderr, "Wrong Syntax"); 
+		exit(1); 
+	}
+	char* result[] = extract_var_name_val(equal, args[1]);  
+	// set_env_var(&env_var, result[0], result[1], true); 
+
+}
+void builtin_set(char **args){
+
+}
+void builtin_unset(char **args){
+
+} 
+
 BuiltinCommands builtins[] = {
 	{"cd", builtin_cd}, 
 	{"echo", builtin_echo}, 
 	{"exit", builtin_exit}, 
-	{"pwd", builtin_pwd}
+	{"pwd", builtin_pwd}, 
+	{"export", builtin_pwd},
+	{"set", builtin_pwd},
+	{"unset", builtin_pwd}
 }; 

@@ -5,6 +5,10 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/types.h>
+#include <stdbool.h>
+
+#include "shell_parser.h"
+#include "env_variable.h"
 
 extern exit_status; 
 
