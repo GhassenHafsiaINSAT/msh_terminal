@@ -8,11 +8,16 @@
 int main(void){
 
 	char buffer[1024]; 
-
 	while(1){
-		printf("miniShell@ghassen-hafsia>"); 
+
+		if (PS1){
+			printf("%s", PS1_content); 
+		}
+		else{
+			printf("msh>"); 
+		}
 		fgets(buffer, sizeof(buffer), stdin); 
-		trim_spaces(buffer);
+
 	}
 }	
 

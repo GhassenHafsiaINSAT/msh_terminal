@@ -96,15 +96,21 @@ void builtin_export(char **args){
 		fprintf (stderr, "Wrong Syntax"); 
 		exit(1); 
 	}
-	char* result[] = extract_var_name_val(equal, args[1]);  
-	// set_env_var(&env_var, result[0], result[1], true); 
+	char **result = extract_var_name_val(equal, args[1]);  
+	set_env_var(&var_list, result[0], result[1], true); 
 
 }
 void builtin_set(char **args){
-
+	char* equal = equal_sign_check(args[1]);
+	if (equal == NULL) {
+		fprintf (stderr, "Wrong Syntax"); 
+		exit(1); 
+	}
+	char **result = extract_var_name_val(equal, args[1]);  
+	set_env_var(&var_list, result[0], result[1], false); 
 }
 void builtin_unset(char **args){
-
+	unset_en_var(&var_list, args[1]); 
 } 
 
 BuiltinCommands builtins[] = {
@@ -112,7 +118,7 @@ BuiltinCommands builtins[] = {
 	{"echo", builtin_echo}, 
 	{"exit", builtin_exit}, 
 	{"pwd", builtin_pwd}, 
-	{"export", builtin_pwd},
-	{"set", builtin_pwd},
-	{"unset", builtin_pwd}
+	{"export", builtin_export},
+	{"set", builtin_set},
+	{"unset", builtin_unset}
 }; 

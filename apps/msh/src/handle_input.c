@@ -32,9 +32,7 @@ void handle_input(char *buffer){
 		
 		if (pid == 0){
 			
-			if (execvp(tokens[0],tokens) == -1){
-			
-				fprintf (stderr, "Command Not Found"); 
+			if (execvp(tokens[0],tokens) == -1){ 
 				command_found = 0; 
 				return; 
 			} 
@@ -53,10 +51,20 @@ void handle_input(char *buffer){
 			return; 		
 		} 
 	}
+
+	// check if it is direct assignment
 	char *equal_sign = equal_sign_check(tokens[0]); 
 	if ( equal_sign != NULL && tokens[1] == NULL){
-		char** name_value = extract_var_name_val(equal_sign, tokens[0]); 
+		char** name_value = extract_var_name_val(equal_sign, tokens[0]);
+		set_env_var(&var_list, name_value[0], name_value[1], false); 
+		command_found = 1; 
+		return; 
 	}
 
-	
+	if (!command_found){
+		fprintf (stderr, "%s: Command Not Found", tokens[0]);
+		return; 
+	}
+
+
 }

@@ -1,33 +1,15 @@
 #include "env_variable.h"
 
-bool handle_env_variable_PS1(char *buffer){
-
-	char variable[20], value[20]; 
-	int start = 0; 
-
-	while (buffer[start] == ' '){
-		start++; 
-	}
-	int j = 0; 
-
-	memmove(buffer, buffer + start, strlen(buffer) - start +1); 
-
-	char *equal = strchr(buffer, '='); 
-	if (equal == NULL) return false; 
-	if ((*(equal + 1) == ' ') || (*(equal - 1) == ' ')) return false; 
-	
-	*equal = '\0'; 
-	strncpy(variable, buffer, sizeof(variable) - 1); 
-	variable[sizeof(variable) - 1] = '\0'; 
-	strncpy(value, equal +1 ,sizeof(value) - 1); 
-	value[sizeof(value) - 1] = '\0'; 
-	
-	if (strncmp(variable, "PS1\0", 4) == 0) return true;
-	
-	return false; 
-} 
-
 void set_env_var(env_var** head_ref, char* name, char* value, bool exported){
+	// checking if the variable already exists
+	env_var* checker = *head_ref; 
+	while (checker!=NULL){
+		if (checker->name == name){
+			checker->value = value; 
+			checker->exported = exported; 
+		}
+	}
+	// if not, we create one
 	// creating a new node
 	env_var* new_var = malloc(sizeof(env_var)); 
 	new_var->name = name; 
@@ -46,6 +28,11 @@ void set_env_var(env_var** head_ref, char* name, char* value, bool exported){
 		last = last->next; 	
 	}
 		last->next = new_var;
+
+	if (strcmp(name, "PS1")){
+		PS1 = 1; 
+		PS1_content = value; 
+	}
 } 
 
 void unset_en_var(env_var** head_ref, char* name){
