@@ -1,4 +1,8 @@
 #include "handle_commands.h"
+#include "shell_parser.h"
+#include "env_variable.h"
+
+int exit_status = 0; 
 
 void builtin_exit(char **args){
 	
@@ -80,8 +84,7 @@ void builtin_echo(char **args){
 
 void builtin_pwd(char **args){
 
-	char *buf[4096];
-	char *path = getcwd(buf, sizeof(buf)); 
+	char *path = getcwd(args[1], sizeof(args[1])); 
 	if (path == NULL){
 		fprintf(stderr, "Searching for Path is impossible");
 		exit(1); 

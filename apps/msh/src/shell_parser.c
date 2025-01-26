@@ -2,8 +2,7 @@
 #include "handle_commands.h"
 
 char *trim_spaces(char *buffer){
-	
-	char **arg; 
+	 
 	int end = strlen(buffer) - 1; 
 
 
@@ -35,14 +34,14 @@ char *trim_spaces(char *buffer){
 
 char **split_command(char *buffer){
 	char *tokens[TOKEN_MAX]; 
-	char *token = strtok(buffer, ' '); 
+	char *token = strtok(buffer, " "); 
 	int token_count = 0; 
 
 	while (token != NULL && token_count<TOKEN_MAX)
 	{
 		tokens[token_count] = token;
 		token_count++; 
-		token = strtok(NULL, ' '); 
+		token = strtok(NULL, " "); 
 	}
 	return tokens; 
 }
@@ -86,4 +85,5 @@ char* catch_first_word(char *buffer){
 		i++; 
 	}
 	first_word[i] = '\0'; 
+	return first_word; 
 }

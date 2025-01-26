@@ -6,13 +6,12 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <stdbool.h>
+#include <sys/wait.h>
 
-#include "shell_parser.h"
-#include "env_variable.h"
+extern pid_t foreground_pid; 
+extern int exit_status; 
 
-extern exit_status; 
-
-void handle_input(char **tokens); 
+void handle_input(char *buffer); 
 
 // Builtin Commands 
 void builtin_exit(char **args);

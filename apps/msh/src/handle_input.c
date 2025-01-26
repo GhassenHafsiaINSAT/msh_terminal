@@ -1,4 +1,8 @@
 #include "handle_commands.h"
+#include "shell_parser.h"
+#include "env_variable.h"
+
+pid_t foreground_pid = -1;
 
 void handle_input(char *buffer){
 	
@@ -39,9 +43,10 @@ void handle_input(char *buffer){
 		}	
 		
 		else if (pid > 0){
-			
+			foreground_pid = pid; 
 			waitpid(pid, NULL, 0); 
 			command_found = 1; 
+			foreground_pid = -1; 
 			return; 
 		}
 		

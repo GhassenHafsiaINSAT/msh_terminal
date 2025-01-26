@@ -3,10 +3,9 @@
 
 #include <stdio.h>
 #include <stdbool.h>
-
-bool handle_env_variable_PS1(char *buffer); 
-
-extern int PS1 = 0; 
+#include <stdlib.h>
+#include <string.h>
+extern int PS1; 
 extern char *PS1_content;
 
 typedef struct environment_variables{
@@ -18,6 +17,6 @@ typedef struct environment_variables{
 
 env_var var_list; 
 
-void set_env_var(env_var** head_ref, char* name, char* value, bool exported); 
-
+void set_env_var(env_var* head_ref, char* name, char* value, bool exported); 
+void unset_en_var(env_var* head_ref, char* name); 
 #endif
