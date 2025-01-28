@@ -1,6 +1,7 @@
 #include "handle_commands.h"
 #include "shell_parser.h"
 #include "env_variable.h"
+#include "job_control.h"
 
 int exit_status = 0; 
 
@@ -103,6 +104,7 @@ void builtin_export(char **args){
 	set_env_var(&var_list, result[0], result[1], true); 
 
 }
+
 void builtin_set(char **args){
 	char* equal = equal_sign_check(args[1]);
 	if (equal == NULL) {
@@ -112,9 +114,14 @@ void builtin_set(char **args){
 	char **result = extract_var_name_val(equal, args[1]);  
 	set_env_var(&var_list, result[0], result[1], false); 
 }
+
 void builtin_unset(char **args){
 	unset_en_var(&var_list, args[1]); 
-} 
+}
+
+void builtin_jobs(char **args){
+	//if (args[1] == NULL) //list_jobs(bg);
+}
 
 BuiltinCommands builtins[] = {
 	{"cd", builtin_cd}, 
@@ -123,5 +130,6 @@ BuiltinCommands builtins[] = {
 	{"pwd", builtin_pwd}, 
 	{"export", builtin_export},
 	{"set", builtin_set},
-	{"unset", builtin_unset}
+	{"unset", builtin_unset},
+	{"jobs", builtin_jobs}
 }; 

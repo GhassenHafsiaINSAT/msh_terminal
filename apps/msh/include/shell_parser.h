@@ -5,6 +5,8 @@
 #include <unistd.h>
 
 #define TOKEN_MAX 3
+#define BUFFER_SIZE 1024
+
 char* trim_spaces(char *buffer); 
 char** split_command(char *buffer); 
 char* catch_first_word(char *buffer); 

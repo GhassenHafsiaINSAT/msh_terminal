@@ -8,11 +8,13 @@
 extern int PS1; 
 extern char *PS1_content;
 
+typedef struct environment_variables env_var;  
+
 typedef struct environment_variables{
     char *name; 
     char *value; 
     bool exported; 
-    struct node* next; 
+    env_var* next; 
 } env_var; 
 
 env_var var_list; 

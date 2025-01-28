@@ -22,7 +22,15 @@ void builtin_echo(char **args);
 
 void builtin_pwd(char **args); 
 
-#define NUM_BUILTIN 4
+void builtin_export(char **args);
+
+void builtin_set(char **args);
+
+void builtin_unset(char **args);
+
+void builtin_jobs(char **args); 
+
+#define NUM_BUILTIN 8
 
 typedef struct {
 	char *name; 

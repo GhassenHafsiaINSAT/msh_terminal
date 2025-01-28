@@ -17,13 +17,16 @@ void handle_input(char *buffer){
 	int command_found = 0;
 	char* first_word = catch_first_word(buffer); 
 	
+	//trim spaces
+	char* valid_input = trim_spaces(buffer); 
+	//splitting the input
+	tokens = split_command(valid_input); 
+
+	
 	// checking if it a builtin command
 	for (int i=0; i<NUM_BUILTIN; i++){
 		if (strcmp(first_word, builtins[i].name) == 0) {
-			//trim spaces
-			char* valid_input = trim_spaces(buffer); 
-			//splitting the input
-			tokens = split_command(valid_input); 
+
 			builtins[i].func(tokens);
 			command_found = 1;  
 			return; 
@@ -35,7 +38,7 @@ void handle_input(char *buffer){
 		pid_t pid = fork(); 
 		
 		if (pid == 0){
-			
+
 			if (execvp(tokens[0],tokens) == -1){ 
 				command_found = 0; 
 				return; 

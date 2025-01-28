@@ -33,9 +33,10 @@ char *trim_spaces(char *buffer){
 
 
 char **split_command(char *buffer){
-	char *tokens[TOKEN_MAX]; 
+
 	char *token = strtok(buffer, " "); 
 	int token_count = 0; 
+	char **tokens = malloc(sizeof(char *) * TOKEN_MAX);
 
 	while (token != NULL && token_count<TOKEN_MAX)
 	{
@@ -77,7 +78,8 @@ char* equal_sign_check(char* buffer){
 }
 char* catch_first_word(char *buffer){
 
-	char* first_word; 
+    char* first_word = malloc(sizeof(char) * (BUFFER_SIZE)); // Allocate memory
+	
 	int i = 0; 
 	
 	while((buffer[i] != ' ') || (buffer[i] != '\0')){
