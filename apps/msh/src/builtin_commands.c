@@ -119,9 +119,55 @@ void builtin_unset(char **args){
 	unset_en_var(&var_list, args[1]); 
 }
 
-void builtin_jobs(char **args){
-	//if (args[1] == NULL) //list_jobs(bg);
+void builtin_jobs(){
+	bg_list* runner = jobs_list;
+	
+	if (runner == NULL) printf ("\n"); 
+
+	while (runner != NULL)
+	{
+		printf ("[%d] %s %s" , runner->job_id, runner->status, runner->command); 
+	}
 }
+
+void builtin_bg(char **args){
+	bg_list* runner = jobs_list; 
+	while(runner != NULL){
+		if (runner->job_id == args[1] && runner->status ==  "paused"){
+			kill(runner->process_id, SIGCONT);  
+            runner->status = "running"; 
+			printf("[%d]+ %s %s &", runner->job_id, args[0], args[1]);            
+		} 
+		runner = runner ->next; 
+	}
+	    printf("Job [%d] not found or not stopped.\n", runner->job_id);
+}
+
+void builtin_fg(char **args){
+	
+	bg_list* runner = jobs_list; 
+
+	while (runner != NULL){
+		if (runner->job_id == args[1]) {
+
+        	pid_t pid = runner->process_id;
+            
+            tcsetpgrp(STDIN_FILENO, pid);
+            
+            kill(pid, SIGCONT);
+
+            int status;
+            waitpid(pid, &status, WUNTRACED);
+
+            tcsetpgrp(STDIN_FILENO, getpid());
+            
+            return;
+        }
+		runner = runner->next; 
+	}
+    printf("Job [%d] not found.\n", args[1]);
+
+    }
 
 BuiltinCommands builtins[] = {
 	{"cd", builtin_cd}, 
@@ -131,5 +177,7 @@ BuiltinCommands builtins[] = {
 	{"export", builtin_export},
 	{"set", builtin_set},
 	{"unset", builtin_unset},
-	{"jobs", builtin_jobs}
+	{"jobs", builtin_jobs}, 
+	{"bg", builtin_bg}, 
+	{"fg", builtin_fg}
 }; 

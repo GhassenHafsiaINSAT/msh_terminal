@@ -13,12 +13,13 @@ typedef struct background_process bg_list;
 typedef struct background_process{
     
     int job_id; 
-    int process_id; 
+    pid_t process_id; 
     char* command; 
     char* status; 
     bg_list* next; 
+}  bg_list;
 
-} bg_list; 
+extern bg_list* jobs_list; 
 
 void list_jobs(bg_list* bg); 
 

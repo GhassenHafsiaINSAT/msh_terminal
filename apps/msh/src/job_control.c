@@ -30,19 +30,25 @@ bool is_background(char* input){
 void check_job_status(bg_list* job) {
 
     int status;
+    
+    // WHOHANG returns 0 if child process still running 
+    // it returns 0 immediatly instead of waiting until the process is terminated 
+    // WUNTRACED returns if child process is stopped 
+    // without these flags, waitpid does return only is the child process is terminated 
+    // these returns are evaluated with Status Analysis Macros 
+
     pid_t pid = waitpid(job->process_id, &status, WNOHANG | WUNTRACED);  
 
     if (pid > 0) {
-        if (WIFEXITED(status)) {
+        if (WIFEXITED(status)) {                // terminated normally 
             strcpy(job->status, "Terminated");
-        } else if (WIFSTOPPED(status)) {
+        } else if (WIFSTOPPED(status)) {        // SIGSTOP signal 
             strcpy(job->status, "Stopped");
-        } else if (WIFSIGNALED(status)) {
+        } else if (WIFSIGNALED(status)) {       // SIGINT signal 
             strcpy(job->status, "terminated");
         }
     } else if (pid == 0) {
-
-        strcpy(job->status, "Running");
+        strcpy(job->status, "Running");         
     } 
 }
 
