@@ -1,10 +1,21 @@
 #include "shell_parser.h"
-#include "handle_commands.h"
 
-char *trim_spaces(char *buffer){
+char* remove_leading_spaces(char* buffer){
+	
+	int start = 0; 
+	char** tokens; 
+	while (buffer[start] == ' '){
+		start++; 
+	}
+
+	memmove(buffer, buffer + start, strlen(buffer) - start +1); 
+	
+	return buffer; 
+}
+
+char* trim_spaces(char *buffer){
 	 
 	int end = strlen(buffer) - 1; 
-
 
 	while ((end) && (buffer[end] == ' ')){
 		end --; 
@@ -32,7 +43,7 @@ char *trim_spaces(char *buffer){
 }
 
 
-char **split_command(char *buffer){
+char** split_command(char *buffer){
 
 	char *token = strtok(buffer, " "); 
 	int token_count = 0; 
@@ -78,7 +89,7 @@ char* equal_sign_check(char* buffer){
 }
 char* catch_first_word(char *buffer){
 
-    char* first_word = malloc(sizeof(char) * (BUFFER_SIZE)); // Allocate memory
+    char* first_word = malloc(sizeof(char) * (BUFFER_SIZE)); 
 	
 	int i = 0; 
 	

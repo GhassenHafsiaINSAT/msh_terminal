@@ -3,7 +3,25 @@
 int PS1 = 0;                
 char *PS1_content = NULL;
 
+char* get_env_var(char* name){
+	
+	env_var* checker = var_list; 
+	if(var_list == NULL){
+		printf("the environment variable list is empty"); 
+		return NULL; 
+	}
+
+	while (checker!=NULL){
+		if (checker->name == name){
+			return checker->value;  
+		}
+	}
+
+	return NULL; 
+
+	}
 void set_env_var(env_var* head_ref, char* name, char* value, bool exported){
+
 	// checking if the variable already exists
 	env_var* checker = head_ref; 
 	while (checker!=NULL){
@@ -12,6 +30,7 @@ void set_env_var(env_var* head_ref, char* name, char* value, bool exported){
 			checker->exported = exported; 
 		}
 	}
+
 	// if not, we create one
 	// creating a new node
 	env_var* new_var = malloc(sizeof(env_var)); 

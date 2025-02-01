@@ -1,9 +1,12 @@
 #include <stdio.h>
 #include <string.h>
+
 #include "shell_parser.h"
 #include "env_variable.h"
 #include "handle_commands.h"
 #include "job_control.h"
+#include "handle_input.h"
+#include "handle_signal.h"
 
 int main(void){
 

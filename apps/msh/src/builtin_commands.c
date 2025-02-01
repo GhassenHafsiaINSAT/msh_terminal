@@ -70,7 +70,6 @@ void builtin_echo(char **args){
 		else if (strcmp(args[i], "$SHELL") == 0){
 			char *path = getenv("SHELL"); 
 			printf("%s", path); 
-			// to do : develop our 
 		}
 
 		else {

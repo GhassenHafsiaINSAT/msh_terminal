@@ -11,7 +11,6 @@
 extern pid_t foreground_pid; 
 extern int exit_status; 
 
-void handle_input(char *buffer); 
 
 // Builtin Commands 
 void builtin_exit(char **args);
