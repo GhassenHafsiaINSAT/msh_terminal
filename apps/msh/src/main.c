@@ -20,6 +20,7 @@ int main(void){
 			printf("msh>"); 
 		}
 		fgets(buffer, sizeof(buffer), stdin); 
+		handle_input(buffer); 
 		void check_job_status(bg_list* job);
 	}
 }	

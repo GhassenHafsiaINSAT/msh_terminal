@@ -8,7 +8,6 @@
 #include <stdbool.h>
 #include <sys/wait.h>
 
-extern pid_t foreground_pid; 
 extern int exit_status; 
 
 

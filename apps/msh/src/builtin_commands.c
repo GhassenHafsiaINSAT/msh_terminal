@@ -100,7 +100,7 @@ void builtin_export(char **args){
 		exit(1); 
 	}
 	char **result = extract_var_name_val(equal, args[1]);  
-	set_env_var(&var_list, result[0], result[1], true); 
+	set_env_var(result[0], result[1], true); 
 
 }
 
@@ -111,35 +111,37 @@ void builtin_set(char **args){
 		exit(1); 
 	}
 	char **result = extract_var_name_val(equal, args[1]);  
-	set_env_var(&var_list, result[0], result[1], false); 
+	set_env_var(result[0], result[1], false); 
 }
 
 void builtin_unset(char **args){
-	unset_en_var(&var_list, args[1]); 
+	unset_en_var(args[1]); 
 }
 
-void builtin_jobs(){
+void builtin_jobs(char** args){
 	bg_list* runner = jobs_list;
 	
 	if (runner == NULL) printf ("\n"); 
 
 	while (runner != NULL)
 	{
-		printf ("[%d] %s %s" , runner->job_id, runner->status, runner->command); 
+		printf ("[%s] %s %s" , runner->job_id, runner->status, runner->command); 
 	}
 }
 
 void builtin_bg(char **args){
 	bg_list* runner = jobs_list; 
 	while(runner != NULL){
-		if (runner->job_id == args[1] && runner->status ==  "paused"){
+		if ((strcmp(runner->job_id, args[1]) == 0) && (strcmp(runner->status, "paused") == 0)){
 			kill(runner->process_id, SIGCONT);  
             runner->status = "running"; 
-			printf("[%d]+ %s %s &", runner->job_id, args[0], args[1]);            
+			printf("[%s]+ %s %s &", runner->job_id, args[0], args[1]);   
+			return;          
 		} 
 		runner = runner ->next; 
 	}
-	    printf("Job [%d] not found or not stopped.\n", runner->job_id);
+	    printf("Job [%s] not found or not stopped.\n", args[1]);
+		return; 
 }
 
 void builtin_fg(char **args){
@@ -164,7 +166,7 @@ void builtin_fg(char **args){
         }
 		runner = runner->next; 
 	}
-    printf("Job [%d] not found.\n", args[1]);
+    printf("Job [%s] not found.\n", args[1]);
 
     }
 

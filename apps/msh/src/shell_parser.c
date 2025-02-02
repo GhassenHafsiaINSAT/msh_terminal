@@ -3,7 +3,6 @@
 char* remove_leading_spaces(char* buffer){
 	
 	int start = 0; 
-	char** tokens; 
 	while (buffer[start] == ' '){
 		start++; 
 	}

@@ -1,5 +1,6 @@
 #include "handle_input.h"
 
+pid_t foreground_pid = 0; 
 int execute_builtin(char** tokens, char* first_word){
 	
 	for (int i=0; i<NUM_BUILTIN; i++){
@@ -26,15 +27,14 @@ int execute_external(char** tokens){
 		}	
 		
 		else if (pid > 0){
-			waitpid(pid, NULL, 0); 
+			foreground_pid = pid; 
+			waitpid(pid, NULL, 0);
+			foreground_pid  = -1;  
 			return 1; 
 		}
 		
-		else {
-		
-			fprintf(stderr, "Error while forking\n");  
-			return 0; 		
-		} 
+		fprintf(stderr, "Error while forking\n");  
+		return 0; 		
 }
 
 int execute_direct_assignment(char** tokens){
@@ -43,7 +43,7 @@ int execute_direct_assignment(char** tokens){
 	
 	if ( equal_sign != NULL && tokens[1] == NULL){
 		char** name_value = extract_var_name_val(equal_sign, tokens[0]);
-		set_env_var(&var_list, name_value[0], name_value[1], false); 
+		set_env_var(name_value[0], name_value[1], false); 
 		return 1; 
 	}
 
@@ -52,7 +52,11 @@ int execute_direct_assignment(char** tokens){
 
 int handle_input(char *buffer){
 	
-	if ((buffer == NULL) || (strlen(buffer) == 0) || (strlen(remove_leading_spaces(buffer) == 0))){
+	if ((buffer == NULL) || 
+		(strlen(buffer) == 0) ||
+		(strlen(remove_leading_spaces(buffer)) == 0)
+		){
+
 		printf("\n"); 
 		return 0; 
 	}

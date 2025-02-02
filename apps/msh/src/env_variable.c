@@ -2,14 +2,15 @@
 
 int PS1 = 0;                
 char *PS1_content = NULL;
-
+env_var* var_list = NULL;
 char* get_env_var(char* name){
 	
-	env_var* checker = var_list; 
 	if(var_list == NULL){
 		printf("the environment variable list is empty"); 
 		return NULL; 
 	}
+
+	env_var* checker = var_list; 
 
 	while (checker!=NULL){
 		if (checker->name == name){
@@ -20,10 +21,10 @@ char* get_env_var(char* name){
 	return NULL; 
 
 	}
-void set_env_var(env_var* head_ref, char* name, char* value, bool exported){
+void set_env_var(char* name, char* value, bool exported){
 
 	// checking if the variable already exists
-	env_var* checker = head_ref; 
+	env_var* checker = var_list; 
 	while (checker!=NULL){
 		if (checker->name == name){
 			checker->value = value; 
@@ -40,12 +41,12 @@ void set_env_var(env_var* head_ref, char* name, char* value, bool exported){
 	new_var->next = NULL;
 
 	// if the list is already empty
-	env_var* last = head_ref; 
-	if(head_ref == NULL){
-		head_ref = new_var;
+	if(var_list == NULL){
+		var_list = new_var;
 		return; 
 	}  
 	// else 
+	env_var* last = var_list; 
 	while (last->next != NULL){
 		last = last->next; 	
 	}
@@ -57,8 +58,8 @@ void set_env_var(env_var* head_ref, char* name, char* value, bool exported){
 	}
 } 
 
-void unset_en_var(env_var* head_ref, char* name){
-	env_var* runner = head_ref; 
+void unset_en_var(char* name){
+	env_var* runner = var_list; 
 	env_var* previous = NULL; 
 	while(runner!=NULL && strcmp(runner->name, name) != 0){
 		previous = runner; 
@@ -73,8 +74,9 @@ void unset_en_var(env_var* head_ref, char* name){
 
 	// if variable name found in the head of the linked list
 	if (previous == NULL){
-		head_ref = runner->next; 
+		var_list = runner->next; 
 	}
+
 	// elsewhere 
 	else {
 		previous->next = runner->next; 

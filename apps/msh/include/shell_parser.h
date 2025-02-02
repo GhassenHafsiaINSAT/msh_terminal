@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 #define TOKEN_MAX 3
 #define BUFFER_SIZE 1024

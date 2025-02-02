@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "handle_commands.h": "c"
+        "handle_commands.h": "c",
+        "job_control.h": "c"
     }
 }

@@ -1,5 +1,7 @@
 #include "job_control.h"
 
+bg_list* jobs_list = NULL; 
+
 void list_jobs(bg_list* bg){
     
     if(bg == NULL) printf("\n"); 
@@ -52,7 +54,7 @@ void check_job_status(bg_list* job) {
     } 
 }
 
-void add_job(bg_list* bg, int job_id, int process_id, char* command, char* status){
+void add_job(bg_list* bg, char* job_id, int process_id, char* command, char* status){
     
     bg_list* new_job = malloc(sizeof(bg_list)); 
     new_job->command = command; 

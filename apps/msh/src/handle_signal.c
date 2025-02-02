@@ -1,10 +1,8 @@
-#include "signal.h"
-#include "handle_commands.h"
+#include "handle_signal.h"
 
 void sigint_handler(int signum){
     if (foreground_pid > 0){
         kill (foreground_pid, SIGINT); 
-
     }
 }
 

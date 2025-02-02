@@ -16,8 +16,10 @@ typedef struct environment_variables{
     struct environment_variables* next; 
 } env_var; 
 
-env_var* var_list = NULL;
+extern env_var* var_list;
 
-void set_env_var(env_var* head_ref, char* name, char* value, bool exported); 
-void unset_en_var(env_var* head_ref, char* name); 
+char* get_env_var(char* name); 
+void set_env_var(char* name, char* value, bool exported); 
+void unset_en_var(char* name); 
+
 #endif

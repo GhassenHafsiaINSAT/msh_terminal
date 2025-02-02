@@ -5,9 +5,9 @@ char** identify_pipe(char* input){
     char* copy = strdup(input);  
     if (!copy) return NULL;
     
-    char* pipe = strtok(copy, '|'); 
+    char* pipe = strtok(copy, "|"); 
 
-    if (pipe == NULL) return; 
+    if (pipe == NULL) return NULL; 
 
     char** pipe_process = NULL; 
     int num_pipes = 0; 
@@ -28,6 +28,7 @@ char** identify_pipe(char* input){
     }
     
     char** temp = realloc(pipe_process, (num_pipes + 1) * sizeof(char *)); 
+    pipe_process = temp; 
     pipe_process[num_pipes] = NULL; 
     
     free(copy); 
